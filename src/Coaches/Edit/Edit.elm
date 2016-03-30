@@ -1,44 +1,11 @@
-module Edit (..) where 
-
-
-import StartApp 
-import Effects exposing (Effects, Never)
-import Task  
-
+module Coaches.Edit.Edit (..) where 
 
 import Html exposing (..)
 import Html.Attributes exposing (value, type', checked, rows, cols)
 
 
-type alias CoachId = Int
-
-
-type alias Model = 
-    {
-        id: CoachId,
-        spots: Int,
-        name: String,
-        mentor: Bool,
-        coach: Bool,
-        capabilities: String,
-        description: String
-    }
-
-
-init : (Model, Effects Action)
-init =
-    (
-        {
-            id = 0,
-            spots = 0,
-            name = "",
-            mentor = False,
-            coach = False,
-            capabilities = "",
-            description = ""
-        }, 
-        Effects.none
-    )
+import Coaches.Edit.Models exposing (..)
+import Coaches.Edit.Actions exposing (..)
 
 
 view : Signal.Address Action -> Model -> Html
@@ -104,31 +71,3 @@ formDescription address model =
                 ] 
                 []
         ]
-
-
-type Action = 
-    NoOp
-
-
-update : Action -> Model -> (Model, Effects Action)
-update action model = 
-    case action of 
-        NoOp -> (model, Effects.none)
-
-
-app =
-  StartApp.start
-    { init = init
-    , update = update
-    , view = view
-    , inputs = []
-    }
-
-
-main =
-    app.html
-
-
-port runner : Signal (Task.Task Never ())
-port runner =
-  app.tasks
