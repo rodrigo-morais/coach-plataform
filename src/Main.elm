@@ -13,7 +13,7 @@ import Coaches.Edit.Edit exposing (view)
 
 init : (ViewModel, Effects Action)
 init =
-    (initialViewModel, Effects.none)
+  (initialViewModel, Effects.none)
 
 
 app =
@@ -26,7 +26,7 @@ app =
 
 
 main =
-    app.html
+  app.html
 
 
 port runner : Signal (Task.Task Never ())

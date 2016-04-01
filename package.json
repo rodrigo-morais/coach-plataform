@@ -4,7 +4,7 @@
   "description": "A coach platform to manage coaches and mentors.",
   "main": "index.js",
   "scripts": {
-    "api": "node api.js",
+    "api": "node server/api.js",
     "build": "webpack",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --port 3000"
@@ -31,6 +31,7 @@
     "elm-webpack-loader": "^2.0.1",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
+    "json-server": "^0.8.9",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
