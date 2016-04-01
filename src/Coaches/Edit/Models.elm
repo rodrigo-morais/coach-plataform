@@ -1,10 +1,10 @@
-module Coaches.Edit.Models (..) where 
+module Coaches.Edit.Models (..) where
 
 
 type alias CoachId = Int
 
 
-type alias Model = 
+type alias Coach =
     {
         id: CoachId,
         spots: Int,
@@ -16,8 +16,8 @@ type alias Model =
     }
 
 
-initialModel : Model
-initialModel =
+initialCoach : Coach
+initialCoach =
     {
         id = 0,
         spots = 0,
@@ -28,4 +28,36 @@ initialModel =
         description = ""
     }
 
+type MessageType =
+  Blank
+  | Error
+  | Success
 
+
+type alias Message =
+  {
+    messageType : MessageType,
+    text : String
+  }
+
+
+initialMessage : Message
+initialMessage =
+  {
+    messageType = Blank,
+    text = ""
+  }
+
+
+type alias ViewModel =
+  {
+    coach : Coach,
+    message : Message
+  }
+
+
+initialViewModel =
+  {
+    coach = initialCoach,
+    message = initialMessage
+  }

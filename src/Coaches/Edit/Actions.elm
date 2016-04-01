@@ -1,5 +1,9 @@
-module Coaches.Edit.Actions (..) where 
+module Coaches.Edit.Actions (..) where
 
 
-type Action = 
+import Coaches.Edit.Models exposing (..)
+
+
+type Action =
     NoOp
+    | SaveCoach
