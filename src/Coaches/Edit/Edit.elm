@@ -1,7 +1,8 @@
-module Coaches.Edit.Edit (..) where
+module Coaches.Edit.Edit (view) where
 
 import Html exposing (..)
 import Html.Attributes exposing (class, value, href, placeholder, cols, rows, type', checked)
+import Html.Events exposing (onClick)
 
 
 import String
@@ -11,16 +12,45 @@ import Coaches.Edit.Models exposing (..)
 import Coaches.Edit.Actions exposing (..)
 
 
-view : Signal.Address Action -> Model -> Html.Html
+view : Signal.Address Action -> ViewModel -> Html.Html
 view address model =
   div []
       [
+        flash address model,
         nav address model,
         form address model
       ]
 
 
-nav : Signal.Address Action -> Model -> Html.Html
+flash : Signal.Address Action -> ViewModel -> Html
+flash address model =
+  let
+    class' =
+      case model.message.messageType of
+        Blank ->
+          ""
+
+        Error ->
+          "bold center p2 mb2 white bg-red rounded"
+
+        Success ->
+          "bold center p2 mb2 white bg-green rounded"
+
+
+    message' =
+      case model.message.messageType of
+        Blank ->
+          span [ ] [ ]
+
+        _ ->
+          div [ class class' ]
+              [ text model.message.text ]
+
+  in
+    message'
+
+
+nav : Signal.Address Action -> ViewModel -> Html.Html
 nav address model =
   div [ class "clearfix mb2 white bg-black" ]
       [
@@ -29,21 +59,21 @@ nav address model =
       ]
 
 
-form : Signal.Address Action -> Model -> Html.Html
+form : Signal.Address Action -> ViewModel -> Html.Html
 form address model =
   let
     name =
-      if (String.isEmpty model.name) then
+      if (String.isEmpty model.coach.name) then
         "New coach"
       else
-        model.name
+        model.coach.name
 
   in
     div [ class "m3" ]
         [
           h1  []
               [ text name ],
-          formSpots address model,
+          formSpot address model,
           formName address model,
           formTypes address model,
           formCapabilities address model,
@@ -51,8 +81,8 @@ form address model =
         ]
 
 
-formSpots : Signal.Address Action -> Model -> Html.Html
-formSpots address model =
+formSpot : Signal.Address Action -> ViewModel -> Html.Html
+formSpot address model =
   div [ class "clearfix py1" ]
       [
         div [ class "col col-3" ]
@@ -61,13 +91,13 @@ formSpots address model =
             [
               btnSpotDecrease address model,
               span  [ class "h2 bold" ]
-                    [ text (toString model.spots) ],
+                    [ text (toString model.coach.spots) ],
               btnSpotIncrease address model
             ]
       ]
 
 
-btnSpotDecrease : Signal.Address Action -> Model -> Html.Html
+btnSpotDecrease : Signal.Address Action -> ViewModel -> Html.Html
 btnSpotDecrease address model =
   a [
       class "btn ml0 h1"
@@ -78,7 +108,7 @@ btnSpotDecrease address model =
     ]
 
 
-btnSpotIncrease : Signal.Address Action -> Model -> Html.Html
+btnSpotIncrease : Signal.Address Action -> ViewModel -> Html.Html
 btnSpotIncrease address model =
   a [
       class "btn ml0 h1"
@@ -89,7 +119,7 @@ btnSpotIncrease address model =
     ]
 
 
-formName : Signal.Address Action -> Model -> Html.Html
+formName : Signal.Address Action -> ViewModel -> Html.Html
 formName address model =
   div [ class "clearfix py1" ]
       [
@@ -104,7 +134,7 @@ formName address model =
       ]
 
 
-formTypes : Signal.Address Action -> Model -> Html.Html
+formTypes : Signal.Address Action -> ViewModel -> Html.Html
 formTypes address model =
   div [ class "clearfix py1" ]
       [
@@ -116,7 +146,7 @@ formTypes address model =
                   [
                     input [
                             type' "checkbox",
-                            checked model.mentor
+                            checked model.coach.mentor
                           ]
                           [ ],
                     text "Mentor"
@@ -125,7 +155,7 @@ formTypes address model =
                   [
                     input [
                             type' "checkbox",
-                            checked model.coach
+                            checked model.coach.coach
                           ]
                           [ ],
                     text "Coach"
@@ -134,17 +164,17 @@ formTypes address model =
       ]
 
 
-inputName : Signal.Address Action -> Model -> Html.Html
+inputName : Signal.Address Action -> ViewModel -> Html.Html
 inputName address model =
   input [
           class "field-light",
-          value model.name,
+          value model.coach.name,
           placeholder "New coach"
         ]
         [ ]
 
 
-formCapabilities : Signal.Address Action -> Model -> Html.Html
+formCapabilities : Signal.Address Action -> ViewModel -> Html.Html
 formCapabilities address model =
   div [ class "clearfix py1" ]
       [
@@ -157,17 +187,17 @@ formCapabilities address model =
       ]
 
 
-inputCapabilities : Signal.Address Action -> Model -> Html.Html
+inputCapabilities : Signal.Address Action -> ViewModel -> Html.Html
 inputCapabilities address model =
   input [
           class "field-light col col-12",
-          value model.capabilities,
+          value model.coach.capabilities,
           placeholder "Fill the capabilities of coach"
         ]
         [ ]
 
 
-formDescription : Signal.Address Action -> Model -> Html.Html
+formDescription : Signal.Address Action -> ViewModel -> Html.Html
 formDescription address model =
   div [ class "clearfix py1" ]
       [
@@ -180,11 +210,11 @@ formDescription address model =
       ]
 
 
-inputDescription : Signal.Address Action -> Model -> Html.Html
+inputDescription : Signal.Address Action -> ViewModel -> Html.Html
 inputDescription address model =
   textarea  [
               class "field-light col col-12",
-              value model.description,
+              value model.coach.description,
               placeholder "Fill the description of coach",
               cols 12,
               rows 5
@@ -192,10 +222,11 @@ inputDescription address model =
             [ ]
 
 
-saveBtn : Signal.Address Action -> Model -> Html.Html
+saveBtn : Signal.Address Action -> ViewModel -> Html.Html
 saveBtn address model =
   button  [
-            class "btn regular"
+            class "btn regular",
+            onClick address SaveCoach
           ]
           [
             i [ class "fa fa-floppy-o mr1" ]

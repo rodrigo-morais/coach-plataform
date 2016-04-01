@@ -1,19 +1,19 @@
-module Main (..) where 
+module Main (..) where
 
 
-import StartApp 
+import StartApp
 import Effects exposing (Effects, Never)
-import Task  
+import Task
 
 import Coaches.Edit.Models exposing (..)
 import Coaches.Edit.Actions exposing (..)
 import Coaches.Edit.Update exposing (..)
-import Coaches.Edit.Edit exposing (..)
+import Coaches.Edit.Edit exposing (view)
 
 
-init : (Model, Effects Action)
+init : (ViewModel, Effects Action)
 init =
-    (initialModel, Effects.none)
+    (initialViewModel, Effects.none)
 
 
 app =
