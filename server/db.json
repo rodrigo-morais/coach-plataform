@@ -1,0 +1,40 @@
+{
+  "coaches": [
+    {
+      "id": 0,
+      "spots": 0,
+      "name": "Antonio",
+      "mentor": true,
+      "coach": false,
+      "capabilities": "devops, hbase",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "spots": 0,
+      "name": "Carlos",
+      "mentor": true,
+      "coach": true,
+      "capabilities": "iot",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "spots": 0,
+      "name": "Alberto",
+      "mentor": false,
+      "coach": true,
+      "capabilities": "database",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "spots": 0,
+      "name": "Renato",
+      "mentor": true,
+      "coach": false,
+      "capabilities": "java",
+      "description": ""
+    }
+  ]
+}
