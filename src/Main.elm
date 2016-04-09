@@ -5,23 +5,36 @@ import StartApp
 import Effects exposing (Effects, Never)
 import Task
 
-import Coaches.Edit.Models exposing (..)
-import Coaches.Edit.Actions exposing (..)
-import Coaches.Edit.Update exposing (..)
-import Coaches.Edit.Edit exposing (view)
+import Router.Routing exposing (..)
 
 
-init : (ViewModel, Effects Action)
+import Actions exposing (..)
+import Models exposing (..)
+import View exposing (..)
+import Update exposing (..)
+
+
+init : ( AppModel, Effects Actions.Action )
 init =
-  (initialViewModel, Effects.none)
+  let
+    fxs = [ Effects.map CoachesEditAction Effects.none ]
+    fx = Effects.batch fxs
+
+  in
+    (initialAppModel, fx)
+
+
+routerSignal : Signal Actions.Action
+routerSignal =
+  Signal.map RoutingAction Router.Routing.signal
 
 
 app =
   StartApp.start
     { init = init
-    , update = update
+    , update = Update.update
     , view = view
-    , inputs = []
+    , inputs = [routerSignal]
     }
 
 
@@ -32,3 +45,8 @@ main =
 port runner : Signal (Task.Task Never ())
 port runner =
   app.tasks
+
+
+port routeRunTask : Task.Task () ()
+port routeRunTask =
+  Router.Routing.run
