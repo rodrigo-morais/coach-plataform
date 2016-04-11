@@ -25,7 +25,7 @@ view address model =
       coachesEditView address model.coaches coachId
 
     CoachesNewRoute ->
-      coachesNewView address
+      coachesNewView address model
 
 notFoundView : Html.Html
 notFoundView =
@@ -56,14 +56,6 @@ coachesEditView address coaches coachId =
         notFoundView
 
 
-coachesNewView : Signal.Address Action -> Html.Html
-coachesNewView address =
-  let
-    viewModel =
-      {
-        coach = CoachesEditModels.initialCoach
-      , message = CoachesEditModels.initialMessage
-      }
-
-  in
-    CoachesEditView.view (Signal.forwardTo address CoachesEditAction) viewModel
+coachesNewView : Signal.Address Action -> AppModel -> Html.Html
+coachesNewView address model =
+  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM

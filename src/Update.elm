@@ -18,11 +18,8 @@ update action model =
   case action of
     CoachesEditAction subAction ->
       let
-        updateModel =
-          { model | coachVM = initialCoachEditVM }
-
         ( updatedCoachVM, fx ) =
-          Coaches.Edit.Update.update subAction updateModel.coachVM
+          Coaches.Edit.Update.update subAction model.coachVM
       in
         ( { model | coachVM = updatedCoachVM }, Effects.map CoachesEditAction fx )
 
