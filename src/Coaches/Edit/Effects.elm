@@ -8,6 +8,7 @@ import Task
 import Effects  
 
 
+import Coaches.Effects as CoachEffects
 import Coaches.Edit.Actions exposing (..)
 import Coaches.Edit.Models exposing (..)
 
@@ -19,7 +20,7 @@ saveCoaches coach =
       |> Encode.encode 0
       |> Http.string
   in
-    post coachDecoder saveUrl body
+    post CoachEffects.coachDecoder saveUrl body
       |> Task.toResult
       |> Task.map SaveDone
       |> Effects.task
@@ -40,19 +41,6 @@ post decoder url body =
 saveUrl : String
 saveUrl =
     "http://localhost:4000/coaches"
-
-
-coachDecoder : Decode.Decoder Coach
-coachDecoder =
-  Decode.object7
-    Coach
-    ("id" := Decode.int)
-    ("spots" := Decode.int)
-    ("name" := Decode.string)
-    ("mentor" := Decode.bool)
-    ("coach" := Decode.bool)
-    ("capabilities" := Decode.string)
-    ("description" := Decode.string)
 
 
 coachEncoder : Coach -> Encode.Value

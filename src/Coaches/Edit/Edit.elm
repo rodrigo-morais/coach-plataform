@@ -7,6 +7,7 @@ import Html.Events exposing (onClick, targetValue, on, targetChecked)
 import String
 
 
+import Coaches.View as CoachesView
 import Coaches.Edit.Models exposing (..)
 import Coaches.Edit.Actions exposing (..)
 
@@ -156,7 +157,7 @@ inputName address coach =
   input [ class "field-light"
         , value coach.name
         , placeholder "New coach"
-        , onTextChange address UpdateName
+        , CoachesView.onTextChange address UpdateName
         ]
         []
 
@@ -178,7 +179,7 @@ inputCapabilities address coach =
   input [ class "field-light col col-12"
         , value coach.capabilities
         , placeholder "Fill the capabilities of coach"
-        , onTextChange address UpdateCapabilities
+        , CoachesView.onTextChange address UpdateCapabilities
         ]
         []
 
@@ -203,7 +204,7 @@ inputDescription address coach =
     , placeholder "Fill the description of coach"
     , cols 12
     , rows 5
-    , onTextChange address UpdateDescription
+    , CoachesView.onTextChange address UpdateDescription
     ]
     []
 
@@ -218,10 +219,3 @@ saveBtn address coach =
     , text "Save coach"
     ]
 
-
-onTextChange : Signal.Address Action -> (String -> Action) -> Attribute
-onTextChange address action =
-  let signalMessage str = 
-    Signal.message address (action str)
-  in
-    on "change" targetValue (signalMessage) 
