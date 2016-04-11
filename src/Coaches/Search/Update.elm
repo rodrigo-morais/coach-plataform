@@ -7,7 +7,7 @@ import Coaches.Search.Effects as SearchEffects
 import Effects
 
 
-update : Action -> SearchModel -> (SearchModel, Effects.Effects Action)
+update : Action -> ViewModel -> (ViewModel, Effects.Effects Action)
 update action model =
   case action of
     SearchCoaches -> (model, SearchEffects.doSearch model)

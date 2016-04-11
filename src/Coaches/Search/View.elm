@@ -9,7 +9,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
 
-view : Signal.Address Action -> SearchModel -> Html.Html
+view : Signal.Address Action -> ViewModel -> Html.Html
 view address model = 
   div 
     []
@@ -18,7 +18,7 @@ view address model =
     ]
 
 
-searchFields : Signal.Address Action -> SearchModel -> Html.Html
+searchFields : Signal.Address Action -> ViewModel -> Html.Html
 searchFields address model =
   div
     []

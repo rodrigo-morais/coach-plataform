@@ -8,14 +8,14 @@ type alias Coach = CoachesModel.Coach
 type alias Coaches = List Coach
 
 
-type alias SearchModel =
+type alias ViewModel =
   { capabilities : String 
   , coaches: Coaches
   }
 
 
-initialSearchModel : SearchModel
-initialSearchModel =
+initialViewModel : ViewModel
+initialViewModel =
   { capabilities = ""
   , coaches = []
   }

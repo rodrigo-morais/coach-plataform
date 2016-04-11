@@ -7,16 +7,6 @@ import Task
 
 import Router.Routing exposing (..)
 
---import Coaches.Search.Models exposing (..)
---import Coaches.Search.Actions exposing (..)
---import Coaches.Search.Update exposing (..)
---import Coaches.Search.View as SearchView
-
---import Coaches.Edit.Edit as EditView
---import Coaches.Edit.Models exposing (..)
---import Coaches.Edit.Actions exposing (..)
---import Coaches.Edit.Update exposing (..)
-
 import Actions exposing (..)
 import Models exposing (..)
 import View exposing (..)
@@ -37,19 +27,6 @@ routerSignal : Signal Actions.Action
 routerSignal =
   Signal.map RoutingAction Router.Routing.signal
 
---init : (SearchModel, Effects Action)
---init =
---  (initialSearchModel, Effects.none)
-
---init : (ViewModel, Effects Action)
---init =
---  (initialViewModel, Effects.none)
-
---view address model = 
---  SearchView.view address model
-  
---view address model = 
---  EditView.view address model
 
 app =
   StartApp.start

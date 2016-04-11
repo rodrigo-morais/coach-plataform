@@ -8,6 +8,7 @@ import Actions exposing (..)
 
 
 import Coaches.Edit.Update
+import Coaches.Search.Update
 
 
 import Router.Routing as Routing
@@ -22,6 +23,13 @@ update action model =
           Coaches.Edit.Update.update subAction model.coachVM
       in
         ( { model | coachVM = updatedCoachVM }, Effects.map CoachesEditAction fx )
+
+    CoachesSearchAction subAction ->
+      let
+        ( updatedSearchVM, fx ) =
+          Coaches.Search.Update.update subAction model.searchVM
+      in
+        ( { model | searchVM = updatedSearchVM }, Effects.map CoachesSearchAction fx )
 
     RoutingAction subAction ->
       let

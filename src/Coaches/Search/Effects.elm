@@ -13,7 +13,7 @@ import Http
 import Json.Decode as Decode
 
 
-doSearch : SearchModel -> Effects.Effects Action
+doSearch : ViewModel -> Effects.Effects Action
 doSearch model =
   let 
     url = searchUrl model
@@ -24,13 +24,13 @@ doSearch model =
       |> Effects.task
 
 
-searchUrl : SearchModel -> String
+searchUrl : ViewModel -> String
 searchUrl model =
   "http://localhost:4000/coaches?" 
     ++ capabilitiesQuery model
 
 
-capabilitiesQuery : SearchModel -> String
+capabilitiesQuery : ViewModel -> String
 capabilitiesQuery model =
   let
     pattern = (Regex.regex ",( *)") 

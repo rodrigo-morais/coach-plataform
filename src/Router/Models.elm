@@ -8,6 +8,7 @@ type Route
   = NotFoundRoute
   | CoachesNewRoute
   | CoachesEditRoute Int
+  | CoachesSearchRoute
   
 
 type alias RouteModel =

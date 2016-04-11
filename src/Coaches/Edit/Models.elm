@@ -4,6 +4,7 @@ module Coaches.Edit.Models (..) where
 import Coaches.Models as CoachesModel
 
 
+type alias CoachId = CoachesModel.CoachId
 type alias Coach = CoachesModel.Coach
 
 type MessageType =
