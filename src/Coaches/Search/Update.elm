@@ -23,4 +23,10 @@ update action model =
     UpdateCapabilities value ->
       ({model | capabilities = value}, Effects.none)
 
+    UpdateCoach value ->
+      ({model | coach = value}, Effects.none)
+
+    UpdateMentor value ->
+      ({model | mentor = value}, Effects.none)
+
     NoOp -> (model, Effects.none)

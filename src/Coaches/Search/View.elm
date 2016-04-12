@@ -15,9 +15,7 @@ view address model =
     [ class "clearfix" ]
     [ div
         [ class "col-8 mx-auto mt2" ]
-        [ div
-            []
-            [searchFields address model]
+        [ searchFields address model
         , coaches address model.coaches
         ]
     ]
@@ -26,30 +24,63 @@ view address model =
 searchFields : Signal.Address Action -> ViewModel -> Html.Html
 searchFields address model =
   div
-    [ class "clearfix"]
+    []
     [ div
-        [ class "col col-9"]
-        [ input 
-          [ class "input col-12 col py1"
-          , value model.capabilities
-          , placeholder "Search by capabilities"
-          , CoachesView.onTextChange address UpdateCapabilities
+        [ class "clearfix"]
+        [ div
+            [ class "col col-7"]
+            [ inputCapabilities address model.capabilities
+            ]
+        , div
+            [ class "col col-5 px2"
+            -- Don't know why, but pl2 does not work
+            , style [("padding-right", "0")] 
+            ]
+            [ inputType address model.coach "Coach" UpdateCoach
+            , inputType address model.mentor "Mentor" UpdateMentor
+            , searchButton address 
+            ]
+        ]
+    ]
+
+inputCapabilities : Signal.Address Action -> String -> Html.Html
+inputCapabilities address capabilities =
+  input 
+    [ class "input col-12 col py1 border rounded"
+    , value capabilities
+    , placeholder "Search by capabilities"
+    , CoachesView.onTextChange address UpdateCapabilities
+    ]
+    []
+
+inputType : Signal.Address Action -> Bool -> String -> (Bool -> Action) -> Html.Html
+inputType address model typeName action =
+  let onChangeValue value =
+    Signal.message address (action value)
+  in
+    div 
+      [ class "col col-4 py1" ]
+      [ input 
+          [ id typeName
+          , type' "checkbox"
+          , checked model
+          , on "change" targetChecked onChangeValue
           ]
           []
-        ]
-    , div
-        [ class "col col-3 px2" ]
-        [ searchButton address ]
-    ]
+      , label [for typeName] [text typeName]
+      ]
 
 
 searchButton : Signal.Address Action -> Html.Html
 searchButton address =
-  button 
-    [ onClick address SearchCoaches
-    , class "btn rounded white bg-black"
-    ] 
-    [ text "Search"]
+  div
+    [ class "col col-4"]
+    [ button
+        [ onClick address SearchCoaches
+        , class "btn rounded white bg-black right"
+        ] 
+        [ text "Search"]
+    ]
 
 
 coaches : Signal.Address Action -> Coaches -> Html.Html

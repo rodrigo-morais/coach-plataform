@@ -10,6 +10,8 @@ type alias Coaches = List Coach
 
 type alias ViewModel =
   { capabilities : String 
+  , coach: Bool
+  , mentor: Bool
   , coaches: Coaches
   }
 
@@ -17,5 +19,7 @@ type alias ViewModel =
 initialViewModel : ViewModel
 initialViewModel =
   { capabilities = ""
+  , coach = False
+  , mentor = False
   , coaches = []
   }

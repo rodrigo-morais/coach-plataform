@@ -10,3 +10,5 @@ type Action =
   | SearchCoaches
   | SearchDone (Result Http.Error Coaches)
   | UpdateCapabilities String
+  | UpdateCoach Bool
+  | UpdateMentor Bool
