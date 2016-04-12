@@ -47,17 +47,11 @@ capabilitiesQuery model =
 typeQueries : ViewModel -> String
 typeQueries model =
   let
-    -- Probably there is a better way to do this
     coach =
-      if model.coach == False then
-        if model.mentor == False then "" else "&coach=false"
-      else
-        "&coach=true"
+      if model.coach == True then "&coach=true" else ""
+        
     mentor =
-      if model.mentor == False then
-        if model.coach == False then "" else "&mentor=false"
-      else
-        "&mentor=true"
+      if model.mentor == True then "&mentor=true" else ""
   in
     coach ++ mentor
 
