@@ -46,7 +46,7 @@ searchFields address model =
 inputCapabilities : Signal.Address Action -> String -> Html.Html
 inputCapabilities address capabilities =
   input 
-    [ class "input col-12 col py1 border rounded"
+    [ class "input col-12 col py1"
     , value capabilities
     , placeholder "Search by capabilities"
     , CoachesView.onTextChange address UpdateCapabilities
@@ -88,16 +88,27 @@ coaches address coaches =
   let
     coachRow coach =
       div
-        [class "overflow-hidden border rounded mt2"]
+        [ class "clearfix border-box border mt2"]
         [ div
-            [class "p2 bold white bg-black"]
-            [text coach.name]
+            [ class "col col-2"]
+            [ img [ src coachImageUrl ] [] ]
         , div
-            [class "p2"]
-            [text coach.capabilities]
-        , div
-            [class "p2"]
-            [text coach.description]
+            [ class "col col-10"]
+            [ div
+                [class "p2 bold col col-12"]
+                [text coach.name]
+            , div
+                [class "p2 col col-12"]
+                [text ((toString coach.spots) ++ " spots")]
+            , div
+                [class "px1 col col-12"]
+                [ showType coach.coach "Coach" coach.id
+                , showType coach.mentor "Mentor" coach.id
+                ]
+            , div
+                [class "p2 col col-12"]
+                [text coach.capabilities]
+            ]
         ]
     coachList = List.map coachRow coaches 
   in
@@ -105,3 +116,23 @@ coaches address coaches =
       [ class "mt1"]
       coachList
 
+
+showType : Bool -> String -> Int -> Html.Html
+showType model typeName coachId =
+  let
+    inputId = typeName ++ (toString coachId)
+  in
+    div
+      [ class "col col-2"]
+      [ input 
+          [ id inputId
+          , type' "checkbox"
+          , checked model
+          , disabled True
+          ]
+          []
+      , label [for inputId] [text typeName]
+      ]
+
+coachImageUrl = 
+  "http://img12.deviantart.net/5921/i/2013/082/6/1/south_park_character_png_by_lalbiel-d5yzsp2.png"
