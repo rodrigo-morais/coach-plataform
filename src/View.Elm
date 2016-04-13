@@ -16,20 +16,27 @@ import Coaches.Edit.Edit as CoachesEditView
 import Coaches.Edit.Models as CoachesEditModels
 
 
+import Navigation.View as NavigationView
+
+
 view : Signal.Address Action -> AppModel -> Html.Html
 view address model =
-  case model.routeModel.route of
-    NotFoundRoute ->
-      notFoundView
-  
-    CoachesEditRoute coachId ->
-      coachesEditView address model.coaches coachId
+  div [ ]
+      [ NavigationView.view
+      , case model.routeModel.route of
+          NotFoundRoute ->
+            notFoundView
+        
+          CoachesEditRoute coachId ->
+            coachesEditView address model.coaches coachId
 
-    CoachesNewRoute ->
-      coachesNewView address model
+          CoachesNewRoute ->
+            coachesNewView address model
 
-    CoachesSearchRoute ->
-      coachesSearchView address model
+          CoachesSearchRoute ->
+            coachesSearchView address model
+      ]
+
 
 notFoundView : Html.Html
 notFoundView =
