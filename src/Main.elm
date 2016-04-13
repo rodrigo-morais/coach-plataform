@@ -7,7 +7,6 @@ import Task
 
 import Router.Routing exposing (..)
 
-
 import Actions exposing (..)
 import Models exposing (..)
 import View exposing (..)

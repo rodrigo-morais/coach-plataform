@@ -11,6 +11,7 @@ import Actions exposing (..)
 import Models exposing (..)
 
 
+import Coaches.Search.View as CoachesSearchView
 import Coaches.Edit.Edit as CoachesEditView
 import Coaches.Edit.Models as CoachesEditModels
 
@@ -26,6 +27,9 @@ view address model =
 
     CoachesNewRoute ->
       coachesNewView address model
+
+    CoachesSearchRoute ->
+      coachesSearchView address model
 
 notFoundView : Html.Html
 notFoundView =
@@ -59,3 +63,10 @@ coachesEditView address coaches coachId =
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
 coachesNewView address model =
   CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
+
+
+coachesSearchView : Signal.Address Action -> AppModel -> Html.Html
+coachesSearchView address model =
+  CoachesSearchView.view 
+    (Signal.forwardTo address CoachesSearchAction) 
+    model.searchVM

@@ -41,11 +41,17 @@ coachesNewMatcher =
   match1 CoachesNewRoute "/coaches/new"
 
 
+coachesSearchMatcher : PathMatcher Route
+coachesSearchMatcher =
+  match1 CoachesSearchRoute "/coaches/search"
+
+
 matchers : List (PathMatcher Route)
 matchers =
   [ indexMatcher
   , coachesEditMatcher
   , coachesNewMatcher
+  , coachesSearchMatcher
   ]
 
 

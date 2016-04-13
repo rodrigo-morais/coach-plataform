@@ -1,30 +1,11 @@
 module Coaches.Edit.Models (..) where
 
 
-type alias CoachId = Int
+import Coaches.Models as CoachesModel
 
 
-type alias Coach =
-  { id: CoachId
-  , spots: Int
-  , name: String
-  , mentor: Bool
-  , coach: Bool
-  , capabilities: String
-  , description: String
-  }
-
-
-initialCoach : Coach
-initialCoach =
-  { id = 0
-  , spots = 0
-  , name = ""
-  , mentor = False
-  , coach = False
-  , capabilities = ""
-  , description = ""
-  }
+type alias CoachId = CoachesModel.CoachId
+type alias Coach = CoachesModel.Coach
 
 type MessageType =
   Blank
@@ -52,6 +33,6 @@ type alias ViewModel =
 
 
 initialViewModel =
-  { coach = initialCoach
+  { coach = CoachesModel.initialCoach
   , message = initialMessage
   }
