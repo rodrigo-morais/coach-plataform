@@ -28,7 +28,7 @@ update = Router.Update.update
 
 indexMatcher : PathMatcher Route
 indexMatcher =
-  match1 NotFoundRoute "/"
+  match1 CoachesSearchRoute "/"
 
 
 coachesEditMatcher : PathMatcher Route
