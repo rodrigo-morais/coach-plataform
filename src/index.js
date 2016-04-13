@@ -1,6 +1,7 @@
 'use strict';
 
 require('basscss/css/basscss.css');
+require('basscss-border-colors/css/border-colors.css');
 require('font-awesome/css/font-awesome.css');
 
 // Require index.html so it gets copied to dist

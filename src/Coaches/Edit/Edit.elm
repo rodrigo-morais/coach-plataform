@@ -17,7 +17,6 @@ view address model =
   div 
     []
     [ flash address model.message
-    , nav address model.coach
     , form address model.coach
     ]
 
@@ -47,16 +46,6 @@ flash address message =
             [ text message.text ]
   in
     message'
-
-
-nav : Signal.Address Action -> Coach -> Html.Html
-nav address coach =
-  div 
-    [ class "clearfix mb2 white bg-black" ]
-    [ div 
-        [ class "right p1" ]
-        [ saveBtn address coach ]
-    ]
 
 
 form : Signal.Address Action -> Coach -> Html.Html
