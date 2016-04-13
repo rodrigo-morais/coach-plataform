@@ -29,7 +29,10 @@ listCoaches : AppModel -> Html.Html
 listCoaches model =
   let
     (stl, cls) =
-      styles model "search"
+      if List.isEmpty model.routeModel.location.path then
+        styles model ""
+      else
+        styles model "search"
 
   in
     a [ href "#/coaches/search", class "text-decoration-none", style [stl] ]
@@ -60,18 +63,15 @@ newCoach model =
 styles : AppModel -> String -> ((String, String), String)
 styles model route =
   let
-    routeModel =
-      model.routeModel
-
-    location =
-      routeModel.location
-
     path =
-      location.path
+      model.routeModel.location.path
 
     maybeList =
-      List.foldl (::) [] path
-      |> List.head
+      if List.isEmpty path then
+        Just ""
+      else
+        List.foldl (::) [] path
+        |> List.head
 
     (stl, cls) =
       case maybeList of
