@@ -22,7 +22,7 @@ import Navigation.View as NavigationView
 view : Signal.Address Action -> AppModel -> Html.Html
 view address model =
   div [ ]
-      [ NavigationView.view model
+      [ NavigationView.view (Signal.forwardTo address NavigationAction) model
       , case model.routeModel.route of
           NotFoundRoute ->
             notFoundView
