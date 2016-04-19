@@ -40,13 +40,33 @@ update action model =
         case getCoach of
           Just coach ->
             let
+              selectedCoach =
+                model.selectedCoach
+
+              updateSelectedCoach =
+                { selectedCoach | coach = coach, editable = True }
+
               updatedCoach =
-                { model | selectedCoach = coach }
+                { model | selectedCoach = updateSelectedCoach }
 
             in
               (updatedCoach, Effects.none)
 
           Nothing ->
             (model, Effects.none)
+
+    ViewCoach coachId ->
+      let
+        (vm, fx) =
+          update (SelectCoach coachId) model
+
+        selectedCoach =
+          vm.selectedCoach
+
+        updatedSelectedCoach =
+          { selectedCoach | editable = False}
+
+      in
+        ({ model | selectedCoach = updatedSelectedCoach }, Effects.none)
 
     NoOp -> (model, Effects.none)

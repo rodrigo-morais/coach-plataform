@@ -13,3 +13,4 @@ type Action =
   | UpdateCoach Bool
   | UpdateMentor Bool
   | SelectCoach CoachId
+  | ViewCoach CoachId

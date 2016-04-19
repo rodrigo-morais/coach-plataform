@@ -28,7 +28,8 @@ update action model =
             let
               updatedViewModel =
                 { coach = model.coach
-                , message = successMessage 
+                , message = successMessage
+                , editable = False
                 }
             in
               (updatedViewModel, Effects.none)

@@ -177,7 +177,7 @@ viewButton address coachId =
     [
       button  [
                 class "col col-12"
-              , onClick address (SelectCoach coachId)
+              , onClick address (ViewCoach coachId)
               ]
               [ text "View" ]
     ]

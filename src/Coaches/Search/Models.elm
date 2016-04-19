@@ -14,7 +14,10 @@ type alias ViewModel =
   , coach : Bool
   , mentor : Bool
   , coaches : Coaches
-  , selectedCoach : Coach
+  , selectedCoach : {
+      coach : Coach
+    , editable : Bool
+    }
   }
 
 
@@ -24,5 +27,8 @@ initialViewModel =
   , coach = False
   , mentor = False
   , coaches = []
-  , selectedCoach = CoachesModel.initialCoach
+  , selectedCoach = {
+      coach = CoachesModel.initialCoach
+    , editable = False
+    }
   }

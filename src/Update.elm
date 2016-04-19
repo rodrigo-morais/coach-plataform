@@ -33,8 +33,11 @@ update action model =
         coachVM =
           model.coachVM
 
+        selectedCoach =
+          updatedSearchVM.selectedCoach
+
         updatedCoachVm =
-          { coachVM | coach = updatedSearchVM.selectedCoach }
+          { coachVM | coach = selectedCoach.coach, editable = selectedCoach.editable }
 
       in
         ( { model | searchVM = updatedSearchVM, coachVM = updatedCoachVm }, Effects.map CoachesSearchAction fx )
