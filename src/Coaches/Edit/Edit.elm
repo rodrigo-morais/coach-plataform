@@ -2,7 +2,7 @@ module Coaches.Edit.Edit (view) where
 
 
 import Html exposing (..)
-import Html.Attributes exposing (class, value, href, placeholder, cols, rows, type', checked)
+import Html.Attributes exposing (class, value, href, placeholder, cols, rows, type', checked, readonly, disabled)
 import Html.Events exposing (onClick, targetValue, on, targetChecked)
 import String
 
@@ -17,7 +17,7 @@ view address model =
   div 
     []
     [ flash address model.message
-    , form address model.coach
+    , form address model.coach model.editable
     ]
 
 
@@ -48,8 +48,8 @@ flash address message =
     message'
 
 
-form : Signal.Address Action -> Coach -> Html.Html
-form address coach =
+form : Signal.Address Action -> Coach -> Bool -> Html.Html
+form address coach editable =
   let name =
     if (String.isEmpty coach.name) then
       "New coach"
@@ -59,16 +59,16 @@ form address coach =
     div 
       [ class "m3" ]
       [ h1  [] [ text name ]
-      , formSpot address coach
-      , formName address coach
-      , formTypes address coach
-      , formCapabilities address coach
-      , formDescription address coach
+      , formSpot address coach editable
+      , formName address coach editable
+      , formTypes address coach editable
+      , formCapabilities address coach editable
+      , formDescription address coach editable
       ]
 
 
-formSpot : Signal.Address Action -> Coach -> Html.Html
-formSpot address coach =
+formSpot : Signal.Address Action -> Coach -> Bool -> Html.Html
+formSpot address coach editable =
   div 
     [ class "clearfix py1" ]
     [ div 
@@ -76,58 +76,80 @@ formSpot address coach =
         [ text "Spots" ]
     , div 
         [ class "col col-9" ]
-        [ btnSpotDecrease address coach
+        [ btnSpotDecrease address coach editable
         , span
             [ class "h2 bold" ]
             [ text (toString coach.spots) ]
-        , btnSpotIncrease address coach
+        , btnSpotIncrease address coach editable
         ]
     ]
 
 
-btnSpotDecrease : Signal.Address Action -> Coach -> Html.Html
-btnSpotDecrease address coach =
-  a 
-    [ class "btn ml0 h1"
-    , onClick address UpdateSpotsDecrease
-    ]
-    [ i [ class "fa fa-minus-circle" ] [] ]
+btnSpotDecrease : Signal.Address Action -> Coach -> Bool -> Html.Html
+btnSpotDecrease address coach editable =
+  let
+    action =
+      if editable then
+        UpdateSpotsDecrease
+      else
+        NoOp
+
+  in
+    a 
+      [ class "btn ml0 h1"
+      , onClick address action
+      ]
+      [ i [ class "fa fa-minus-circle" ] [] ]
 
 
-btnSpotIncrease : Signal.Address Action -> Coach -> Html.Html
-btnSpotIncrease address coach =
-  a [ class "btn ml0 h1"
-    , onClick address UpdateSpotsIncrease
-    ]
-    [ i [ class "fa fa-plus-circle" ] [] ]
+btnSpotIncrease : Signal.Address Action -> Coach -> Bool -> Html.Html
+btnSpotIncrease address coach editable =
+    let
+    action =
+      if editable then
+        UpdateSpotsIncrease
+      else
+        NoOp
+
+  in
+    a 
+      [ class "btn ml0 h1"
+      , onClick address action
+      ]
+      [ i [ class "fa fa-plus-circle" ] [] ]
 
 
-formName : Signal.Address Action -> Coach -> Html.Html
-formName address coach =
+formName : Signal.Address Action -> Coach -> Bool -> Html.Html
+formName address coach editable =
   div [ class "clearfix py1" ]
       [ div [ class "col col-3" ]
             [ text "Name "]
       , div [ class "col col-9" ]
-            [ inputName address coach ]
+            [ inputName address coach editable ]
       ]
 
 
-formTypes : Signal.Address Action -> Coach -> Html.Html
-formTypes address coach =
+formTypes : Signal.Address Action -> Coach -> Bool -> Html.Html
+formTypes address coach editable =
   div [ class "clearfix py1" ]
       [ div [ class "col col-3" ]
             [ text "Types" ]
       , div [ class "col col-9" ]
-            [ formType address coach.mentor "Mentor" UpdateMentor
-            , formType address coach.coach "Coach" UpdateCoach
+            [ formType address coach.mentor editable "Mentor" UpdateMentor
+            , formType address coach.coach editable "Coach" UpdateCoach
             ]
       ]
 
 
-formType : Signal.Address Action -> Bool -> String -> (Bool -> Action) -> Html.Html
-formType address model typeName action =
-  let onChangeValue value =
-    Signal.message address (action value)
+formType : Signal.Address Action -> Bool -> Bool -> String -> (Bool -> Action) -> Html.Html
+formType address model editable typeName action =
+  let
+    onChangeValue value =
+      Signal.message address (action value)
+
+    isDisabled =
+      not editable
+
   in
     div 
       [ class "p1" ]
@@ -135,71 +157,90 @@ formType address model typeName action =
           [ type' "checkbox"
           , checked model
           , on "change" targetChecked onChangeValue
+          , disabled isDisabled
           ]
-          []
+          [ ]
       , text typeName
       ]
 
 
-inputName : Signal.Address Action -> Coach -> Html.Html
-inputName address coach =
-  input [ class "field-light"
-        , value coach.name
-        , placeholder "New coach"
-        , CoachesView.onTextChange address UpdateName
-        ]
-        []
+inputName : Signal.Address Action -> Coach -> Bool -> Html.Html
+inputName address coach editable =
+  let
+    isReadOnly =
+      not editable
+
+  in
+    input [ class "field-light"
+          , value coach.name
+          , placeholder "New coach"
+          , CoachesView.onTextChange address UpdateName
+          , readonly isReadOnly
+          ]
+          [ ]
 
 
-formCapabilities : Signal.Address Action -> Coach -> Html.Html
-formCapabilities address coach =
+formCapabilities : Signal.Address Action -> Coach -> Bool -> Html.Html
+formCapabilities address coach editable =
   div [ class "clearfix py1" ]
       [ div
         [ class "col col-3" ]
         [ text "Capabilities" ]
       , div
         [ class "col col-9" ]
-        [ inputCapabilities address coach ]
+        [ inputCapabilities address coach editable ]
       ]
 
 
-inputCapabilities : Signal.Address Action -> Coach -> Html.Html
-inputCapabilities address coach =
-  input [ class "field-light col col-12"
-        , value coach.capabilities
-        , placeholder "Fill the capabilities of coach"
-        , CoachesView.onTextChange address UpdateCapabilities
-        ]
-        []
+inputCapabilities : Signal.Address Action -> Coach -> Bool -> Html.Html
+inputCapabilities address coach editable =
+  let
+    isReadOnly =
+      not editable
+
+  in
+    input [ class "field-light col col-12"
+          , value coach.capabilities
+          , placeholder "Fill the capabilities of coach"
+          , CoachesView.onTextChange address UpdateCapabilities
+          , readonly isReadOnly
+          ]
+          [ ]
 
 
-formDescription : Signal.Address Action -> Coach -> Html.Html
-formDescription address coach =
+formDescription : Signal.Address Action -> Coach -> Bool -> Html.Html
+formDescription address coach editable =
   div [ class "clearfix py1" ]
       [ div
           [ class "col col-3" ]
           [ text "Description" ]
       , div 
           [ class "col col-9" ]
-          [ inputDescription address coach ]
+          [ inputDescription address coach editable ]
       ]
 
 
-inputDescription : Signal.Address Action -> Coach -> Html.Html
-inputDescription address coach =
-  textarea
-    [ class "field-light col col-12"
-    , value coach.description
-    , placeholder "Fill the description of coach"
-    , cols 12
-    , rows 5
-    , CoachesView.onTextChange address UpdateDescription
-    ]
-    []
+inputDescription : Signal.Address Action -> Coach -> Bool -> Html.Html
+inputDescription address coach editable =
+  let
+    isReadOnly =
+      not editable
+
+  in
+    textarea
+      [ class "field-light col col-12"
+      , value coach.description
+      , placeholder "Fill the description of coach"
+      , cols 12
+      , rows 5
+      , CoachesView.onTextChange address UpdateDescription
+      , readonly isReadOnly
+      ]
+      [ ]
 
 
-saveBtn : Signal.Address Action -> Coach -> Html.Html
-saveBtn address coach =
+saveBtn : Signal.Address Action -> Coach -> Bool -> Html.Html
+saveBtn address coach editable =
   button
     [ class "btn regular"
     , onClick address Save
