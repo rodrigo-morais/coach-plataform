@@ -29,8 +29,15 @@ update action model =
       let
         ( updatedSearchVM, fx ) =
           Coaches.Search.Update.update subAction model.searchVM
+
+        coachVM =
+          model.coachVM
+
+        updatedCoachVm =
+          { coachVM | coach = updatedSearchVM.selectedCoach }
+
       in
-        ( { model | searchVM = updatedSearchVM }, Effects.map CoachesSearchAction fx )
+        ( { model | searchVM = updatedSearchVM, coachVM = updatedCoachVm }, Effects.map CoachesSearchAction fx )
 
     NavigationAction subAction ->
       let

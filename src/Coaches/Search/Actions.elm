@@ -12,3 +12,4 @@ type Action =
   | UpdateCapabilities String
   | UpdateCoach Bool
   | UpdateMentor Bool
+  | SelectCoach CoachId

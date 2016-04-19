@@ -28,7 +28,7 @@ view address model =
             notFoundView
         
           CoachesEditRoute coachId ->
-            coachesEditView address model.coaches coachId
+            coachesEditView address model coachId
 
           CoachesNewRoute ->
             coachesNewView address model
@@ -44,27 +44,9 @@ notFoundView =
       [ text "Not Found" ]
 
 
-coachesEditView : Signal.Address Action -> List CoachesEditModels.Coach -> CoachesEditModels.CoachId -> Html.Html
-coachesEditView address coaches coachId =
-  let
-    maybeCoach =
-      coaches
-      |> List.filter (\coach -> coach.id == coachId)
-      |> List.head
-  in
-    case maybeCoach of
-      Just coach ->
-        let
-          viewModel = 
-            {
-              coach = coach
-            , message = CoachesEditModels.initialMessage
-            }
-        in
-          CoachesEditView.view (Signal.forwardTo address CoachesEditAction) viewModel
-
-      Nothing ->
-        notFoundView
+coachesEditView : Signal.Address Action -> AppModel -> CoachesEditModels.CoachId -> Html.Html
+coachesEditView address model coachId =
+  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
 
 
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
