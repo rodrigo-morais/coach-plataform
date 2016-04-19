@@ -112,7 +112,13 @@ coaches address coaches =
                 ]
             , div
                 [class "p2 col col-12"]
-                [text ((toString coach.spots) ++ " spots")]
+                [ div [ class "col col-6" ]
+                      [ text ((toString coach.spots) ++ " spots") ]
+                , div [ class "col col-3" ]
+                      [ editButton address coach.id ]
+                , div [ class "col col-3" ]
+                      [ viewButton address coach.id ]
+                ]
             , div
                 [class "px1 col col-12"]
                 [ showType coach.coach "Coach" coach.id
@@ -149,3 +155,29 @@ showType model typeName coachId =
 
 coachImageUrl = 
   "http://img12.deviantart.net/5921/i/2013/082/6/1/south_park_character_png_by_lalbiel-d5yzsp2.png"
+
+
+editButton : Signal.Address Action -> CoachId -> Html.Html
+editButton address coachId =
+  a [ href ("#/coaches/" ++ toString(coachId) ++ "/edit")
+    , class "col col-11 mr1" ]
+    [
+      button  [
+                class "col col-12"
+              , onClick address (SelectCoach coachId)
+              ]
+              [ text "Edit" ]
+    ]
+
+
+viewButton : Signal.Address Action -> CoachId -> Html.Html
+viewButton address coachId =
+  a [ href ("#/coaches/" ++ toString(coachId) ++ "/edit")
+    , class "col col-11 ml1" ]
+    [
+      button  [
+                class "col col-12"
+              , onClick address (SelectCoach coachId)
+              ]
+              [ text "View" ]
+    ]
