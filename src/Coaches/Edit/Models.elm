@@ -29,10 +29,12 @@ initialMessage =
 type alias ViewModel =
   { coach : Coach
   , message : Message
+  , editable : Bool
   }
 
 
 initialViewModel =
   { coach = CoachesModel.initialCoach
   , message = initialMessage
+  , editable = False
   }
