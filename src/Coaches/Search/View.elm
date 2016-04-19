@@ -86,6 +86,9 @@ searchButton address =
 coaches : Signal.Address Action -> Coaches -> Html.Html
 coaches address coaches =
   let
+    urlEdit coachId =
+      "#/coaches/" ++ toString(coachId) ++ "/edit"
+
     coachRow coach =
       div
         [ class "clearfix border-box border mt2"]
@@ -96,7 +99,17 @@ coaches address coaches =
             [ class "col col-10"]
             [ div
                 [class "p2 bold col col-12"]
-                [text coach.name]
+                [
+                  a [
+                      href (urlEdit coach.id)
+                    , class "text-decoration-none"
+                    , style [("color", "#000000")]
+                    , onClick address (SelectCoach coach.id)
+                  ]
+                  [
+                    text coach.name
+                  ]
+                ]
             , div
                 [class "p2 col col-12"]
                 [text ((toString coach.spots) ++ " spots")]

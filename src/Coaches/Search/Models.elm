@@ -5,14 +5,16 @@ import Coaches.Models as CoachesModel
 
 
 type alias Coach = CoachesModel.Coach
+type alias CoachId = CoachesModel.CoachId
 type alias Coaches = List Coach
 
 
 type alias ViewModel =
   { capabilities : String 
-  , coach: Bool
-  , mentor: Bool
-  , coaches: Coaches
+  , coach : Bool
+  , mentor : Bool
+  , coaches : Coaches
+  , selectedCoach : Coach
   }
 
 
@@ -22,4 +24,5 @@ initialViewModel =
   , coach = False
   , mentor = False
   , coaches = []
+  , selectedCoach = CoachesModel.initialCoach
   }

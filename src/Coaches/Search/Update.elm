@@ -29,4 +29,24 @@ update action model =
     UpdateMentor value ->
       ({model | mentor = value}, Effects.none)
 
+    SelectCoach coachId ->
+      let
+        getCoach =
+          model.coaches
+            |>  List.filter (\coach -> coach.id == coachId)
+            |> List.head
+
+      in
+        case getCoach of
+          Just coach ->
+            let
+              updatedCoach =
+                { model | selectedCoach = coach }
+
+            in
+              (updatedCoach, Effects.none)
+
+          Nothing ->
+            (model, Effects.none)
+
     NoOp -> (model, Effects.none)
