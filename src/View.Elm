@@ -51,7 +51,12 @@ coachesEditView address model coachId =
 
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
 coachesNewView address model =
-  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
+  let
+    updatedCoachVM =
+      { model | coachVM = CoachesEditModels.initialViewModel }
+
+  in
+    CoachesEditView.view (Signal.forwardTo address CoachesEditAction) updatedCoachVM.coachVM
 
 
 coachesSearchView : Signal.Address Action -> AppModel -> Html.Html
