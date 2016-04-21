@@ -29,7 +29,7 @@ import Navigation.View as NavigationView
 view : Signal.Address Action -> AppModel -> Html.Html
 view address model =
   div [ ]
-      [ NavigationView.view (Signal.forwardTo address NavigationAction) model
+      [ NavigationView.view model
       , case model.routeModel.route of
           NotFoundRoute ->
             notFoundView
@@ -69,24 +69,7 @@ coachesEditView address model coachId =
 
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
 coachesNewView address model =
-  let
-    coachVM = 
-      model.coachVM
-
-    updateCoachVM =
-      { coachVM | coach = CoachesModels.initialCoach, editable = True }
-
-    isNewCoach =
-      (model.coachVM.coach.id == 0)
-
-    updatedCoachVM =
-      if isNewCoach then
-        model
-      else
-        { model | coachVM = updateCoachVM }
-
-  in
-    CoachesEditView.view (Signal.forwardTo address CoachesEditAction) updatedCoachVM.coachVM
+  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
 
 
 coachesSearchView : Signal.Address Action -> AppModel -> Html.Html

@@ -9,28 +9,25 @@ import Html.Events exposing (onClick)
 import Models exposing (..)
 
 
-import Navigation.Actions exposing (..)
+view : AppModel -> Html.Html
+view model =
+  nav model
 
 
-view : Signal.Address Action -> AppModel -> Html.Html
-view address model =
-  nav address model
-
-
-nav : Signal.Address Action -> AppModel -> Html.Html
-nav address model =
+nav : AppModel -> Html.Html
+nav model =
   div 
     [ class "clearfix mb2 white bg-black", style [("min-height", "3.5em")]  ]
     [ div 
         [ class "left p2 col col-10" ]
-        [ listCoaches address model
+        [ listCoaches model
         , newCoach model
         ]
     ]
 
 
-listCoaches : Signal.Address Action -> AppModel -> Html.Html
-listCoaches address model =
+listCoaches : AppModel -> Html.Html
+listCoaches model =
   let
     (stl, cls) =
       if List.isEmpty model.routeModel.location.path then
@@ -39,7 +36,7 @@ listCoaches address model =
         styles model "search"
 
   in
-    a [ href "#/coaches/search", class "text-decoration-none", style [stl], onClick address CleanSearchVM ]
+    a [ href "#/coaches/search", class "text-decoration-none", style [stl] ]
       [ div [ class cls ]
             [ i [ class "fa fa-users ml1 mr1" ]
                 [ ]
