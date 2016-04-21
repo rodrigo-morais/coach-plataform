@@ -36,5 +36,5 @@ type alias ViewModel =
 initialViewModel =
   { coach = CoachesModel.initialCoach
   , message = initialMessage
-  , editable = False
+  , editable = True
   }
