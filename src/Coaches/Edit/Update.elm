@@ -12,10 +12,12 @@ import Coaches.Edit.Effects exposing (..)
 update : Action -> ViewModel -> (ViewModel, Effects Action)
 update action model = 
   let 
-    coach = Debug.log "coach" model.coach
+    coach =
+      model.coach
 
     updateCoach newCoach = 
-      ({model | coach = newCoach}, Effects.none) 
+      ({ model | coach = newCoach }, Effects.none)
+
   in
     case action of 
       NoOp -> (model, Effects.none)
@@ -37,10 +39,10 @@ update action model =
           Err error ->
             ({model | message = errorMessage}, Effects.none)
 
-      UpdateSpotsIncrease ->
+      IncreaseSpots ->
         updateCoach({coach | spots = coach.spots + 1})
 
-      UpdateSpotsDecrease ->
+      DecreaseSpots ->
         let
           spots =
             if coach.spots == 0 then
@@ -51,19 +53,19 @@ update action model =
         in
           updateCoach({ coach | spots = spots })
 
-      UpdateName newName -> 
+      SetName newName -> 
         updateCoach({coach | name = newName})
 
-      UpdateMentor value -> 
+      SetMentor value -> 
         updateCoach({coach | mentor = value})
 
-      UpdateCoach value -> 
+      SetCoach value -> 
         updateCoach({coach | coach = value})
 
-      UpdateCapabilities value -> 
+      SetCapabilities value -> 
         updateCoach({coach | capabilities = value})
 
-      UpdateDescription value -> 
+      SetDescription value -> 
         updateCoach({coach | description = value})
 
 

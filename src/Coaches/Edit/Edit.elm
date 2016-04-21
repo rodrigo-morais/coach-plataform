@@ -90,7 +90,7 @@ btnSpotDecrease address coach editable =
   let
     action =
       if editable then
-        UpdateSpotsDecrease
+        DecreaseSpots
       else
         NoOp
 
@@ -107,7 +107,7 @@ btnSpotIncrease address coach editable =
     let
     action =
       if editable then
-        UpdateSpotsIncrease
+        IncreaseSpots
       else
         NoOp
 
@@ -135,8 +135,8 @@ formTypes address coach editable =
       [ div [ class "col col-3" ]
             [ text "Types" ]
       , div [ class "col col-9" ]
-            [ formType address coach.mentor editable "Mentor" UpdateMentor
-            , formType address coach.coach editable "Coach" UpdateCoach
+            [ formType address coach.mentor editable "Mentor" SetMentor
+            , formType address coach.coach editable "Coach" SetCoach
             ]
       ]
 
@@ -174,7 +174,7 @@ inputName address coach editable =
     input [ class "field-light"
           , value coach.name
           , placeholder "New coach"
-          , CoachesView.onTextChange address UpdateName
+          , CoachesView.onTextChange address SetName
           , readonly isReadOnly
           ]
           [ ]
@@ -202,7 +202,7 @@ inputCapabilities address coach editable =
     input [ class "field-light col col-12"
           , value coach.capabilities
           , placeholder "Fill the capabilities of coach"
-          , CoachesView.onTextChange address UpdateCapabilities
+          , CoachesView.onTextChange address SetCapabilities
           , readonly isReadOnly
           ]
           [ ]
@@ -233,7 +233,7 @@ inputDescription address coach editable =
       , placeholder "Fill the description of coach"
       , cols 12
       , rows 5
-      , CoachesView.onTextChange address UpdateDescription
+      , CoachesView.onTextChange address SetDescription
       , readonly isReadOnly
       ]
       [ ]
