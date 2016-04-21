@@ -3,6 +3,9 @@ module Update (..) where
 import Effects exposing (Effects)
 
 
+import Array
+
+
 import Models exposing (..)
 import Actions exposing (..)
 
@@ -10,6 +13,10 @@ import Actions exposing (..)
 import Coaches.Edit.Update
 import Coaches.Search.Update
 import Navigation.Update
+
+
+import Coaches.Edit.Models as CoachesEditModels
+import Coaches.Search.Models as CoachesSearchModels
 
 
 import Router.Routing as Routing
@@ -51,10 +58,27 @@ update action model =
 
     RoutingAction subAction ->
       let
+        maybeClean =
+          Array.get 1 (Array.fromList updateRouting.location.path)
+
+        (coachVM, searchVM) =
+          case maybeClean of
+            Just "new" ->
+              (CoachesEditModels.initialViewModel, CoachesSearchModels.initialViewModel)
+
+            Just "search" ->
+              (CoachesEditModels.initialViewModel, CoachesSearchModels.initialViewModel)
+
+            Just _ ->
+              (model.coachVM, model.searchVM)
+
+            Nothing ->
+              (model.coachVM, model.searchVM)
+
         (updateRouting, fx) =
           Routing.update subAction model.routeModel
       in
-        ({ model | routeModel = updateRouting }, Effects.map RoutingAction fx)
+        ({ model | routeModel = updateRouting, coachVM = coachVM, searchVM = searchVM }, Effects.map RoutingAction fx)
 
     NoOp ->
       ( model, Effects.none )

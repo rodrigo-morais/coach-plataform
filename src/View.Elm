@@ -77,7 +77,6 @@ coachesNewView address model =
       { coachVM | coach = CoachesModels.initialCoach, editable = True }
 
     isNewCoach =
-      Debug.log "isNewCoach..."
       (model.coachVM.coach.id == 0)
 
     updatedCoachVM =
