@@ -7,13 +7,20 @@ import Html exposing (..)
 import Router.Models exposing (..)
 
 
+import Router.Update exposing (..)
+
+
 import Actions exposing (..)
 import Models exposing (..)
 
 
 import Coaches.Search.View as CoachesSearchView
 import Coaches.Edit.Edit as CoachesEditView
+
+
+import Coaches.Models as CoachesModels
 import Coaches.Edit.Models as CoachesEditModels
+import Coaches.Search.Models as CoachesSearchModels
 
 
 import Navigation.View as NavigationView
@@ -46,14 +53,38 @@ notFoundView =
 
 coachesEditView : Signal.Address Action -> AppModel -> CoachesEditModels.CoachId -> Html.Html
 coachesEditView address model coachId =
-  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
+  let
+    updatedSearchVM =
+      { model | searchVM = CoachesSearchModels.initialViewModel }
+
+    isValid =
+      (model.coachVM.coach.id == coachId)
+
+  in
+    if isValid then
+      CoachesEditView.view (Signal.forwardTo address CoachesEditAction) updatedSearchVM.coachVM
+    else
+      notFoundView 
 
 
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
 coachesNewView address model =
   let
+    coachVM = 
+      model.coachVM
+
+    updateCoachVM =
+      { coachVM | coach = CoachesModels.initialCoach, editable = True }
+
+    isNewCoach =
+      Debug.log "isNewCoach..."
+      (model.coachVM.coach.id == 0)
+
     updatedCoachVM =
-      { model | coachVM = CoachesEditModels.initialViewModel }
+      if isNewCoach then
+        model
+      else
+        { model | coachVM = updateCoachVM }
 
   in
     CoachesEditView.view (Signal.forwardTo address CoachesEditAction) updatedCoachVM.coachVM
@@ -62,5 +93,5 @@ coachesNewView address model =
 coachesSearchView : Signal.Address Action -> AppModel -> Html.Html
 coachesSearchView address model =
   CoachesSearchView.view 
-    (Signal.forwardTo address CoachesSearchAction) 
-    model.searchVM
+      (Signal.forwardTo address CoachesSearchAction) 
+      model.searchVM
