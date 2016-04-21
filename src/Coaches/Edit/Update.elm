@@ -41,7 +41,15 @@ update action model =
         updateCoach({coach | spots = coach.spots + 1})
 
       UpdateSpotsDecrease ->
-        updateCoach({coach | spots = coach.spots - 1})
+        let
+          spots =
+            if coach.spots == 0 then
+              0
+            else
+              coach.spots - 1
+
+        in
+          updateCoach({ coach | spots = spots })
 
       UpdateName newName -> 
         updateCoach({coach | name = newName})
