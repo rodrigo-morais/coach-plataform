@@ -10,10 +10,10 @@ type Action
   = NoOp
   | Save
   | SaveDone (Result Http.Error Coach)
-  | UpdateSpotsIncrease
-  | UpdateSpotsDecrease
-  | UpdateName String
-  | UpdateMentor Bool
-  | UpdateCoach Bool
-  | UpdateCapabilities String
-  | UpdateDescription String
+  | IncreaseSpots
+  | DecreaseSpots
+  | SetName String
+  | SetMentor Bool
+  | SetCoach Bool
+  | SetCapabilities String
+  | SetDescription String

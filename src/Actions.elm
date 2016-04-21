@@ -6,7 +6,6 @@ import Router.Routing as Routing
 
 import Coaches.Edit.Actions as CoachesEditActions
 import Coaches.Search.Actions as CoachesSearchActions
-import Navigation.Actions as NavigationActions
 
 
 type Action =
@@ -14,4 +13,3 @@ type Action =
   | RoutingAction Routing.Action
   | CoachesEditAction CoachesEditActions.Action
   | CoachesSearchAction CoachesSearchActions.Action
-  | NavigationAction NavigationActions.Action

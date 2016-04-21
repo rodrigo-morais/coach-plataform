@@ -12,7 +12,6 @@ import Actions exposing (..)
 
 import Coaches.Edit.Update
 import Coaches.Search.Update
-import Navigation.Update
 
 
 import Coaches.Edit.Models as CoachesEditModels
@@ -48,13 +47,6 @@ update action model =
 
       in
         ( { model | searchVM = updatedSearchVM, coachVM = updatedCoachVm }, Effects.map CoachesSearchAction fx )
-
-    NavigationAction subAction ->
-      let
-        ( updatedSearchVM, fx ) =
-          Navigation.Update.update subAction model
-      in
-        ( { model | searchVM = updatedSearchVM.searchVM }, Effects.map NavigationAction fx )
 
     RoutingAction subAction ->
       let
