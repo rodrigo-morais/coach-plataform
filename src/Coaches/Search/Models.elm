@@ -29,6 +29,6 @@ initialViewModel =
   , coaches = []
   , selectedCoach = {
       coach = CoachesModel.initialCoach
-    , editable = False
+    , editable = True
     }
   }
