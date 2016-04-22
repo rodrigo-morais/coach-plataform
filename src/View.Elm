@@ -15,7 +15,7 @@ import Models exposing (..)
 
 
 import Coaches.Search.View as CoachesSearchView
-import Coaches.Edit.Edit as CoachesEditView
+import Coaches.Edit.View as CoachesEditView
 
 
 import Coaches.Models as CoachesModels

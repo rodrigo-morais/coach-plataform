@@ -22,7 +22,9 @@ update action model =
     case action of 
       NoOp -> (model, Effects.none)
 
-      Save -> (model, saveCoaches coach)
+      Save ->
+        Debug.log "Saving..."
+        (model, saveCoaches coach)
 
       SaveDone result -> 
         case result of
