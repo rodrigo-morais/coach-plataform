@@ -1,4 +1,4 @@
-module Coaches.Edit.Edit (view) where
+module Coaches.Edit.View (view) where
 
 
 import Html exposing (..)
@@ -64,6 +64,7 @@ form address coach editable =
       , formTypes address coach editable
       , formCapabilities address coach editable
       , formDescription address coach editable
+      , formSaveButton address coach editable
       ]
 
 
@@ -104,7 +105,7 @@ btnSpotDecrease address coach editable =
 
 btnSpotIncrease : Signal.Address Action -> Coach -> Bool -> Html.Html
 btnSpotIncrease address coach editable =
-    let
+  let
     action =
       if editable then
         IncreaseSpots
@@ -239,13 +240,34 @@ inputDescription address coach editable =
       [ ]
 
 
-saveBtn : Signal.Address Action -> Coach -> Bool -> Html.Html
-saveBtn address coach editable =
-  button
-    [ class "btn regular"
-    , onClick address Save
-    ]
-    [ i [ class "fa fa-floppy-o mr1" ] []
-    , text "Save coach"
-    ]
+formSaveButton : Signal.Address Action -> Coach -> Bool -> Html.Html
+formSaveButton address coach editable =
+  let
+    action =
+      if editable then
+        Save
+      else
+        NoOp
+
+    isDisabled =
+      not editable
+
+    visible =
+      if editable then
+        "display-block"
+      else
+        "display-none"
+
+    class' =
+      "btn regular border mt2 col col-12 rounded " ++ visible
+
+  in
+    button
+      [ class class'
+      , onClick address action
+      , disabled isDisabled
+      ]
+      [ i [ class "fa fa-floppy-o mr1" ] []
+      , text "Save Coach"
+      ]
 
