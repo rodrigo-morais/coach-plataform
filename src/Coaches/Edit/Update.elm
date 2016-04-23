@@ -23,16 +23,30 @@ update action model =
       NoOp -> (model, Effects.none)
 
       Save ->
-        Debug.log "Saving..."
-        (model, saveCoaches coach)
+        (model, saveCoach coach)
 
-      SaveDone result -> 
+      CreateDone result ->
         case result of
           Ok coach ->
             let
               updatedViewModel =
                 { coach = model.coach
-                , message = successMessage
+                , message = successCreateMessage
+                , editable = False
+                }
+            in
+              (updatedViewModel, Effects.none)
+
+          Err error ->
+            ({model | message = errorMessage}, Effects.none)
+
+      EditDone result ->
+        case result of
+          Ok coach ->
+            let
+              updatedViewModel =
+                { coach = model.coach
+                , message = successEditMessage
                 , editable = False
                 }
             in
@@ -77,8 +91,14 @@ errorMessage =
   , messageType = Error 
   }
 
-successMessage : Message
-successMessage =
-  { text = "New coach created."
+successCreateMessage : Message
+successCreateMessage =
+  { text = "New coach created with success."
+  , messageType = Success
+  }
+
+successEditMessage : Message
+successEditMessage =
+  { text = "Coach edited with success."
   , messageType = Success
   }

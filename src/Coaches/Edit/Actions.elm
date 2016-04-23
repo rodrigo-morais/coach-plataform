@@ -9,7 +9,8 @@ import Http
 type Action 
   = NoOp
   | Save
-  | SaveDone (Result Http.Error Coach)
+  | CreateDone (Result Http.Error Coach)
+  | EditDone (Result Http.Error Coach)
   | IncreaseSpots
   | DecreaseSpots
   | SetName String
