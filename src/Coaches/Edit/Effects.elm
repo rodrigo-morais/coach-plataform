@@ -13,27 +13,46 @@ import Coaches.Edit.Actions exposing (..)
 import Coaches.Edit.Models exposing (..)
 
 
-saveCoaches : Coach -> Effects.Effects Action
-saveCoaches coach =
-  let body = 
-    coachEncoder coach
-      |> Encode.encode 0
-      |> Http.string
+saveCoach : Coach -> Effects.Effects Action
+saveCoach coach =
+  let
+    body = 
+      coachEncoder coach
+        |> Encode.encode 0
+        |> Http.string
   in
-    post CoachEffects.coachDecoder saveUrl body
+    if coach.id == 0 then
+      createCoach body
+    else
+      editCoach body
+
+
+editCoach : Http.Body -> Effects.Effects Action
+editCoach body =
+  post CoachEffects.coachDecoder "POST" body
       |> Task.toResult
-      |> Task.map SaveDone
+      |> Task.map EditDone
+      |> Effects.task
+    
+
+
+createCoach : Http.Body -> Effects.Effects Action
+createCoach body =
+  post CoachEffects.coachDecoder "POST" body
+      |> Task.toResult
+      |> Task.map CreateDone
       |> Effects.task
 
 
 post : Decode.Decoder value -> String -> Http.Body -> Task.Task Http.Error value
-post decoder url body =
-  let request =
-    { verb = "POST"
-    , headers = [("Content-type", "application/json")]
-    , url = url
-    , body = body
-    }
+post decoder verb body =
+  let
+    request =
+      { verb = verb
+      , headers = [("Content-type", "application/json")]
+      , url = saveUrl
+      , body = body
+      }
   in
     Http.fromJson decoder (Http.send Http.defaultSettings request)
 
