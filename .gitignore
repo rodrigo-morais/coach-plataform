@@ -11,3 +11,6 @@ npm-debug.log
 
 # dist
 dist/
+
+#selenium
+selenium-debug.log
