@@ -9,11 +9,14 @@ cache:
     - elm-stuff
 
 before_install:
-  - "npm install -g  npm@^4"
 
 install:
   - npm install
-  - elm-package install
+  - npm install elm -g
+  - elm-package install -y
+  - node_modules/selenium-standalone/bin/selenium-standalone install
 
 script:
-  - npm run dev
+  - npm run api &
+  - npm run dev &
+  - node node_modules/nightwatch/bin/runner.js
