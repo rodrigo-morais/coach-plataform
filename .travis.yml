@@ -18,5 +18,5 @@ install:
 
 script:
   - npm run api &
-  - npm run dev &
-  - node node_modules/nightwatch/bin/runner.js
+  - npm run build
+  - node node_modules/nightwatch/bin/runner.js -e phantomJS
