@@ -37,7 +37,6 @@ searchFields address configuration model =
             ]
         , div
             [ class "col col-5 px2"
-            -- Don't know why, but pl2 does not work
             , style [("padding-right", "0")] 
             ]
             [ inputType address model.coach "Coach" UpdateCoach
@@ -50,7 +49,8 @@ searchFields address configuration model =
 inputCapabilities : Signal.Address Action -> String -> Html.Html
 inputCapabilities address capabilities =
   input 
-    [ class "input col-12 col py1"
+    [ id "capabilities"
+    , class "input col-12 col py1"
     , value capabilities
     , placeholder "Search by capabilities"
     , CoachesView.onTextChange address UpdateCapabilities
@@ -80,7 +80,8 @@ searchButton address configuration =
   div
     [ class "col col-4"]
     [ button
-        [ onClick address (SearchCoaches configuration)
+        [ id "searchButton"
+        , onClick address SearchCoaches
         , class "btn rounded white bg-black right"
         ] 
         [ text "Search"]
@@ -166,8 +167,8 @@ editButton address coachId =
   a [ href ("#/coaches/" ++ toString(coachId) ++ "/edit")
     , class "col col-11 mr1" ]
     [
-      button  [
-                class "col col-12"
+      button  [ id ("editButton-" ++ toString(coachId))
+              , class "col col-12"
               , onClick address (SelectCoach coachId)
               ]
               [ text "Edit" ]
@@ -179,8 +180,8 @@ viewButton address coachId =
   a [ href ("#/coaches/" ++ toString(coachId) ++ "/edit")
     , class "col col-11 ml1" ]
     [
-      button  [
-                class "col col-12"
+      button  [ id ("viewButton-" ++ toString(coachId))
+              , class "col col-12"
               , onClick address (ViewCoach coachId)
               ]
               [ text "View" ]
