@@ -1,22 +1,18 @@
+sudo: required
+
 language: node_js
 
 node_js:
-  - "4.2.*"
+  - "4.4.3"
 
-cache:
-  directories:
-    - node_modules
-    - elm-stuff
+services:
+  - docker
 
 before_install:
-
-install:
-  - npm install
-  - npm install elm -g
-  - elm-package install -y
-  - node_modules/selenium-standalone/bin/selenium-standalone install
+- npm install
+- node_modules/selenium-standalone/bin/selenium-standalone install
+- docker build -t=coach-plataform:0.0.1 .
+- docker run -dt -p 80:9999 coach-plataform:0.0.1
 
 script:
-  - npm run api &
-  - npm run build
-  - node node_modules/nightwatch/bin/runner.js -e phantomJS
+- node node_modules/nightwatch/bin/runner.js -e phantomJS
