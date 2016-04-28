@@ -80,8 +80,7 @@ searchButton address configuration =
   div
     [ class "col col-4"]
     [ button
-        [ id "searchButton"
-        , onClick address (SearchCoaches configuration)
+        [ onClick address (SearchCoaches configuration)
         , class "btn rounded white bg-black right"
         , id "searchButton"
         ] 
