@@ -1,0 +1,30 @@
+{
+  "name": "coach-plataform-e2e",
+  "version": "0.0.1",
+  "description": "A coach platform to manage coaches and mentors. The end-to-end tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/nightwatch/bin/runner.js -e default,chrome,phantomJS",
+    "test-ci": "node node_modules/nightwatch/bin/runner.js -e phantomJS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://rodrigo-morais@github.com/rodrigo-morais/coach-plataform.git"
+  },
+  "keywords": [
+    "Elm",
+    "Coach",
+    "Mentor",
+    "Platform",
+    "e2e"
+  ],
+  "author": "Rodrigo Morais <morais.rm@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigo-morais/coach-plataform/issues"
+  },
+  "homepage": "https://github.com/rodrigo-morais/coach-plataform#readme",
+  "dependencies": {
+    
+  }
+}

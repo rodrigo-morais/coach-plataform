@@ -1,0 +1,29 @@
+{
+  "name": "coach-plataform-back-end",
+  "version": "0.0.1",
+  "description": "A coach platform to manage coaches and mentors. The back-end side to run it local to tests.",
+  "main": "api.js",
+  "scripts": {
+    "api": "node api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://rodrigo-morais@github.com/rodrigo-morais/coach-plataform.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "Coach",
+    "Mentor",
+    "Platform",
+    "json-server"
+  ],
+  "author": "Rodrigo Morais <morais.rm@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigo-morais/coach-plataform/issues"
+  },
+  "homepage": "https://github.com/rodrigo-morais/coach-plataform#readme",
+  "dependencies": {
+    "json-server": "^0.8.9"
+  }
+}
