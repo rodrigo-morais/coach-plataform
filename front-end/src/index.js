@@ -8,8 +8,9 @@ require('font-awesome/css/font-awesome.css');
 // Require index.html so it gets copied to dist
 require('./index.html');
 
-var Elm = require('./Main.elm');
-var mountNode = document.getElementById('main');
+var Elm = require('./Main.elm'),
+    mountNode = document.getElementById('main'),
+    configuration = configurationJSON;
 
 // The third value on embed are the initial values for incomming ports into Elm
-var app = Elm.embed(Elm.Main, mountNode);
+var app = Elm.embed(Elm.Main, mountNode, {getConfiguration: configuration});

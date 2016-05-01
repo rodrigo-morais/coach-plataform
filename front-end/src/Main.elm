@@ -13,14 +13,21 @@ import View exposing (..)
 import Update exposing (..)
 
 
+import Configuration.Models exposing (Configuration)
+
+
 init : ( AppModel, Effects Actions.Action )
 init =
   let
     fxs = [ Effects.map CoachesEditAction Effects.none ]
+    
     fx = Effects.batch fxs
 
+    initialModel =
+      { initialAppModel | configuration = getConfiguration }
+
   in
-    (initialAppModel, fx)
+    (initialModel, fx)
 
 
 routerSignal : Signal Actions.Action
@@ -49,3 +56,5 @@ port runner =
 port routeRunTask : Task.Task () ()
 port routeRunTask =
   Router.Routing.run
+
+port getConfiguration : Configuration

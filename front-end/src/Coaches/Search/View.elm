@@ -4,25 +4,29 @@ import Coaches.View as CoachesView
 import Coaches.Search.Models exposing (..)
 import Coaches.Search.Actions exposing (..)
 
+
+import Configuration.Models exposing (Configuration)
+
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
 
-view : Signal.Address Action -> ViewModel -> Html.Html
-view address model = 
+view : Signal.Address Action -> Configuration -> ViewModel -> Html.Html
+view address configuration model = 
   div
     [ class "clearfix" ]
     [ div
         [ class "col-8 mx-auto mt2" ]
-        [ searchFields address model
+        [ searchFields address configuration model
         , coaches address model.coaches
         ]
     ]
   
 
-searchFields : Signal.Address Action -> ViewModel -> Html.Html
-searchFields address model =
+searchFields : Signal.Address Action -> Configuration -> ViewModel -> Html.Html
+searchFields address configuration model =
   div
     []
     [ div
@@ -38,7 +42,7 @@ searchFields address model =
             ]
             [ inputType address model.coach "Coach" UpdateCoach
             , inputType address model.mentor "Mentor" UpdateMentor
-            , searchButton address 
+            , searchButton address configuration
             ]
         ]
     ]
@@ -71,12 +75,12 @@ inputType address model typeName action =
       ]
 
 
-searchButton : Signal.Address Action -> Html.Html
-searchButton address =
+searchButton : Signal.Address Action -> Configuration -> Html.Html
+searchButton address configuration =
   div
     [ class "col col-4"]
     [ button
-        [ onClick address SearchCoaches
+        [ onClick address (SearchCoaches configuration)
         , class "btn rounded white bg-black right"
         ] 
         [ text "Search"]

@@ -1,6 +1,20 @@
-var path = require("path");
+var path = require("path"),
+    webpack = require('webpack'),
+    configuration = require("./src/config.json"),
+    ip = process.env.IP || 'localhost',
+    ipPort = process.env.IP_PORT || 4000;
+
+configuration.ip = ip.toString();
+configuration.ipPort = ipPort.toString();
+
 
 module.exports = {
+  plugins: [
+    new webpack.DefinePlugin({
+      "configurationJSON": JSON.stringify(configuration)
+    })
+  ],
+
   entry: {
     app: [
       './src/index.js'
@@ -38,7 +52,7 @@ module.exports = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader',
-      },
+      }
     ],
 
     noParse: /\.elm$/,
@@ -47,7 +61,6 @@ module.exports = {
   devServer: {
     inline: true,
     stats: { colors: true },
-  },
-
+  }
 
 };

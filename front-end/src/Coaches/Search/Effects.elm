@@ -5,6 +5,9 @@ import Coaches.Effects as CoachEffects
 import Coaches.Search.Actions exposing (..)
 import Coaches.Search.Models exposing (..)
 
+
+import Configuration.Models exposing (Configuration)
+
 import Regex
 import String
 import Effects
@@ -13,10 +16,10 @@ import Http
 import Json.Decode as Decode
 
 
-doSearch : ViewModel -> Effects.Effects Action
-doSearch model =
+doSearch : ViewModel -> Configuration -> Effects.Effects Action
+doSearch model configuration =
   let 
-    url = searchUrl model
+    url = searchUrl model configuration
   in
     Http.get (Decode.list CoachEffects.coachDecoder) url
       |> Task.toResult
@@ -24,11 +27,16 @@ doSearch model =
       |> Effects.task
 
 
-searchUrl : ViewModel -> String
-searchUrl model =
-  "http://localhost:4000/coaches?" 
-    ++ capabilitiesQuery model
-    ++ typeQueries model
+searchUrl : ViewModel -> Configuration -> String
+searchUrl model configuration =
+  let
+    url =
+      "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches?"
+
+  in
+    url
+      ++ capabilitiesQuery model
+      ++ typeQueries model
 
 
 capabilitiesQuery : ViewModel -> String

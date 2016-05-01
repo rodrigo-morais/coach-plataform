@@ -10,7 +10,7 @@ import Effects
 update : Action -> ViewModel -> (ViewModel, Effects.Effects Action)
 update action model =
   case action of
-    SearchCoaches -> (model, SearchEffects.doSearch model)
+    SearchCoaches configuration -> (model, SearchEffects.doSearch model configuration)
     
     SearchDone result -> 
       case result of
