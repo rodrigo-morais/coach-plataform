@@ -81,7 +81,7 @@ searchButton address configuration =
     [ class "col col-4"]
     [ button
         [ id "searchButton"
-        , onClick address SearchCoaches
+        , onClick address (SearchCoaches configuration)
         , class "btn rounded white bg-black right"
         ] 
         [ text "Search"]
