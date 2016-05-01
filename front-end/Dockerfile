@@ -33,5 +33,6 @@ RUN npm install && npm install elm -g && elm-package install -y && npm install -
 COPY ./ /app
 
 RUN npm run build
+
 WORKDIR /app/dist
 CMD http-server -a 0.0.0.0 -p 9999
