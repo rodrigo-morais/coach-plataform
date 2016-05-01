@@ -1,4 +1,3 @@
-<<<<<<< 1359a59b24af3182a0ac7070497e8822482a7495
 FROM ubuntu:12.04
 
 # Set language
@@ -34,14 +33,6 @@ RUN npm install && npm install elm@0.16.0 -g && elm-package install -y && npm in
 COPY ./ /app
 
 RUN npm run build
-=======
-FROM node:4.4.3
-COPY ./package.json /app/package.json
-COPY ./elm-package.json /app/elm-package.json
-WORKDIR /app
-RUN npm install && npm install elm -g && elm-package install -y && npm install -g http-server
-COPY ./ /app
-CMD IP=192.168.99.100 npm run build
->>>>>>> Configuring project to works on local machine and local Docker using IP to Mac OS x as 192.162.99.100.
+
 WORKDIR /app/dist
 CMD http-server -a 0.0.0.0 -p 9999
