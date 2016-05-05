@@ -4,9 +4,7 @@ services:
     build: ./front-end
     ports:
       - "80:9999"
-    links:
+    depends_on:
       - server
   server:
     build: ./back-end
-    ports:
-      - "4000:4000"
