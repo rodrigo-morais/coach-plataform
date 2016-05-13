@@ -31,7 +31,9 @@ searchUrl : ViewModel -> Configuration -> String
 searchUrl model configuration =
   let
     url =
-      "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches?"
+      case configuration.ip of
+        "/server" -> configuration.ip ++ "/coaches?"
+        _ -> "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches?"
 
   in
     url
