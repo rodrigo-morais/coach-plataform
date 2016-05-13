@@ -1,7 +1,7 @@
 var path = require("path"),
     webpack = require('webpack'),
     configuration = require("./src/config.json"),
-    ip = process.env.IP || 'server',
+    ip = process.env.IP || '/server',
     ipPort = process.env.IP_PORT || 4000;
 
 configuration.ip = ip.toString();

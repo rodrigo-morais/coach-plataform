@@ -62,7 +62,14 @@ post decoder configuration verb body =
 
 saveUrl : Configuration -> String
 saveUrl configuration =
-    "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches"
+  let
+    url =
+      case configuration.ip of
+        "/server" -> configuration.ip ++ "/coaches"
+        _ -> "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches"
+
+  in
+    url
 
 
 coachEncoder : Coach -> Encode.Value
