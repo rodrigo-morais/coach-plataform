@@ -62,18 +62,16 @@ coachesEditView address model coachId =
 
   in
     if isValid then
-      CoachesEditView.view (Signal.forwardTo address CoachesEditAction) updatedSearchVM.coachVM
+      CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.configuration updatedSearchVM.coachVM
     else
       notFoundView 
 
 
 coachesNewView : Signal.Address Action -> AppModel -> Html.Html
 coachesNewView address model =
-  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.coachVM
+  CoachesEditView.view (Signal.forwardTo address CoachesEditAction) model.configuration model.coachVM
 
 
 coachesSearchView : Signal.Address Action -> AppModel -> Html.Html
 coachesSearchView address model =
-  CoachesSearchView.view 
-      (Signal.forwardTo address CoachesSearchAction) 
-      model.searchVM
+  CoachesSearchView.view (Signal.forwardTo address CoachesSearchAction) model.configuration model.searchVM

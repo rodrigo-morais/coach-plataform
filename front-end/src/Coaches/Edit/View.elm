@@ -12,12 +12,15 @@ import Coaches.Edit.Models exposing (..)
 import Coaches.Edit.Actions exposing (..)
 
 
-view : Signal.Address Action -> ViewModel -> Html.Html
-view address model =
+import Configuration.Models exposing (Configuration)
+
+
+view : Signal.Address Action -> Configuration -> ViewModel -> Html.Html
+view address configuration model =
   div 
     []
     [ flash address model.message
-    , form address model.coach model.editable
+    , form address configuration model.coach model.editable
     ]
 
 
@@ -48,8 +51,8 @@ flash address message =
     message'
 
 
-form : Signal.Address Action -> Coach -> Bool -> Html.Html
-form address coach editable =
+form : Signal.Address Action -> Configuration -> Coach -> Bool -> Html.Html
+form address configuration coach editable =
   let name =
     if (String.isEmpty coach.name) then
       "New coach"
@@ -64,7 +67,7 @@ form address coach editable =
       , formTypes address coach editable
       , formCapabilities address coach editable
       , formDescription address coach editable
-      , formSaveButton address coach editable
+      , formSaveButton address configuration coach editable
       ]
 
 
@@ -240,12 +243,12 @@ inputDescription address coach editable =
       [ ]
 
 
-formSaveButton : Signal.Address Action -> Coach -> Bool -> Html.Html
-formSaveButton address coach editable =
+formSaveButton : Signal.Address Action -> Configuration -> Coach -> Bool -> Html.Html
+formSaveButton address configuration coach editable =
   let
     action =
       if editable then
-        Save
+        (Save configuration)
       else
         NoOp
 

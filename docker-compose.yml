@@ -1,0 +1,11 @@
+version: '2'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "4000:4000"
+  web:
+    build: ./front-end
+  server:
+    build: ./back-end

@@ -13,8 +13,11 @@ import Coaches.Edit.Actions exposing (..)
 import Coaches.Edit.Models exposing (..)
 
 
-saveCoach : Coach -> Effects.Effects Action
-saveCoach coach =
+import Configuration.Models exposing (Configuration)
+
+
+saveCoach : Configuration -> Coach -> Effects.Effects Action
+saveCoach configuration coach =
   let
     body = 
       coachEncoder coach
@@ -22,44 +25,51 @@ saveCoach coach =
         |> Http.string
   in
     if coach.id == 0 then
-      createCoach body
+      createCoach configuration body
     else
-      editCoach body
+      editCoach configuration body
 
 
-editCoach : Http.Body -> Effects.Effects Action
-editCoach body =
-  post CoachEffects.coachDecoder "POST" body
+editCoach : Configuration -> Http.Body -> Effects.Effects Action
+editCoach configuration body =
+  post CoachEffects.coachDecoder configuration "POST" body
       |> Task.toResult
       |> Task.map EditDone
       |> Effects.task
     
 
 
-createCoach : Http.Body -> Effects.Effects Action
-createCoach body =
-  post CoachEffects.coachDecoder "POST" body
+createCoach : Configuration -> Http.Body -> Effects.Effects Action
+createCoach configuration  body =
+  post CoachEffects.coachDecoder configuration "POST" body
       |> Task.toResult
       |> Task.map CreateDone
       |> Effects.task
 
 
-post : Decode.Decoder value -> String -> Http.Body -> Task.Task Http.Error value
-post decoder verb body =
+post : Decode.Decoder value -> Configuration -> String -> Http.Body -> Task.Task Http.Error value
+post decoder configuration verb body =
   let
     request =
       { verb = verb
       , headers = [("Content-type", "application/json")]
-      , url = saveUrl
+      , url = saveUrl configuration
       , body = body
       }
   in
     Http.fromJson decoder (Http.send Http.defaultSettings request)
 
 
-saveUrl : String
-saveUrl =
-    "http://localhost:4000/coaches"
+saveUrl : Configuration -> String
+saveUrl configuration =
+  let
+    url =
+      case configuration.ip of
+        "/server" -> configuration.ip ++ "/coaches"
+        _ -> "http://" ++ configuration.ip ++ ":" ++ configuration.ipPort ++ "/coaches"
+
+  in
+    url
 
 
 coachEncoder : Coach -> Encode.Value

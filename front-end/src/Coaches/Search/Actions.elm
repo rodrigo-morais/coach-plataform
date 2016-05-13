@@ -3,11 +3,15 @@ module Coaches.Search.Actions (..) where
 
 import Coaches.Search.Models exposing (..) 
 
+
+import Configuration.Models exposing (Configuration)
+
+
 import Http
 
 type Action = 
   NoOp
-  | SearchCoaches
+  | SearchCoaches Configuration
   | SearchDone (Result Http.Error Coaches)
   | UpdateCapabilities String
   | UpdateCoach Bool

@@ -22,8 +22,8 @@ update action model =
     case action of 
       NoOp -> (model, Effects.none)
 
-      Save ->
-        (model, saveCoach coach)
+      Save configuration ->
+        (model, saveCoach configuration coach)
 
       CreateDone result ->
         case result of
