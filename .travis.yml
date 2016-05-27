@@ -1,18 +1,17 @@
 sudo: required
 
-language: node_js
-
-node_js:
-  - "4.4.3"
-
 services:
   - docker
 
+env:  
+    global:
+        - DOCKER_VERSION=1.11.0
+        - DOCKER_COMPOSE_VERSION=1.7.0
+
 before_install:
-- npm install
-- node_modules/selenium-standalone/bin/selenium-standalone install
-- docker build -t=coach-plataform:0.0.1 .
-- docker run -dt -p 80:9999 coach-plataform:0.0.1
+- docker-compose build
+- docker-compose up -d
 
 script:
-- node node_modules/nightwatch/bin/runner.js -e phantomJS
+- cd e2e
+- WEB_SERVICE='http://127.0.0.1' npm run test
