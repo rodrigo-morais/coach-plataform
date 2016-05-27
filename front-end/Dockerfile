@@ -30,7 +30,7 @@ COPY ./elm-package.json /app/elm-package.json
 
 # Run NPM and ELM-PACKAGE install
 WORKDIR /app
-RUN npm install && npm install elm -g && elm-package install -y && npm install -g http-server
+RUN npm install && npm install elm@0.16.0 -g && elm-package install -y && npm install -g http-server
 COPY ./ /app
 
 RUN npm run build
