@@ -1,9 +1,9 @@
 module.exports = {
   'Add a new coach,' : function (browser) {
     browser
-      .url('http://localhost:5000')
+      .url(process.env.WEB_SERVICE)
       .waitForElementVisible('a[id=newCoach]', 1000)
-      .url('http://localhost:5000/#/coaches/new')
+      .url(process.env.WEB_SERVICE + '/#/coaches/new')
       .waitForElementVisible('a[id=increaseSpot]', 1000)
       .click('a[id=increaseSpot]')
       .click('a[id=increaseSpot]')
@@ -19,7 +19,7 @@ module.exports = {
 
   'Search added coach' : function (browser) {
     browser
-      .url('http://localhost:5000')
+      .url(process.env.WEB_SERVICE)
       .waitForElementVisible('button[id=searchButton]', 1000)
       .click('button[id=searchButton]')
       .pause(1000)
