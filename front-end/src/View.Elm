@@ -22,7 +22,6 @@ import Coaches.Models as CoachesModels
 import Coaches.Edit.Models as CoachesEditModels
 import Coaches.Search.Models as CoachesSearchModels
 
-
 import Navigation.View as NavigationView
 
 
