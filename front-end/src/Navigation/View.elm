@@ -2,7 +2,7 @@ module Navigation.View (..) where
 
 
 import Html exposing (..)
-import Html.Attributes exposing (class, style, href)
+import Html.Attributes exposing (class, style, href, id)
 import Html.Events exposing (onClick)
 
 
@@ -52,7 +52,7 @@ newCoach model =
       styles model "new"
 
   in
-    a [ href "#/coaches/new", class "text-decoration-none", style [stl] ]
+    a [ href "#/coaches/new", class "text-decoration-none", style [stl], id "newCoach" ]
       [ div [ class cls ]
             [ i [ class "fa fa-user-plus ml1 mr1 normal", style [("width", "1em")]]
                 [ ]

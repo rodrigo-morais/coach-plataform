@@ -1,5 +1,6 @@
 version: '2'
 services:
+<<<<<<< 1359a59b24af3182a0ac7070497e8822482a7495
   nginx:
     build: ./nginx
     ports:
@@ -9,3 +10,15 @@ services:
     build: ./front-end
   server:
     build: ./back-end
+=======
+  web:
+    build: ./front-end
+    ports:
+      - "80:9999"
+    links:
+      - server
+  server:
+    build: ./back-end
+    ports:
+      - "4000:4000"
+>>>>>>> Configuring project to works on local machine and local Docker using IP to Mac OS x as 192.162.99.100.

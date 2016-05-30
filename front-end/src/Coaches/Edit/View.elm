@@ -2,7 +2,7 @@ module Coaches.Edit.View (view) where
 
 
 import Html exposing (..)
-import Html.Attributes exposing (class, value, href, placeholder, cols, rows, type', checked, readonly, disabled)
+import Html.Attributes exposing (class, value, href, placeholder, cols, rows, type', checked, readonly, disabled, id)
 import Html.Events exposing (onClick, targetValue, on, targetChecked)
 import String
 
@@ -102,6 +102,7 @@ btnSpotDecrease address coach editable =
     a 
       [ class "btn ml0 h1"
       , onClick address action
+      , id "decreaseSpot"
       ]
       [ i [ class "fa fa-minus-circle" ] [] ]
 
@@ -119,6 +120,7 @@ btnSpotIncrease address coach editable =
     a 
       [ class "btn ml0 h1"
       , onClick address action
+      , id "increaseSpot"
       ]
       [ i [ class "fa fa-plus-circle" ] [] ]
 
@@ -162,6 +164,7 @@ formType address model editable typeName action =
           , checked model
           , on "change" targetChecked onChangeValue
           , disabled isDisabled
+          , id ( (String.toLower typeName) ++ "Check")
           ]
           [ ]
       , text typeName
@@ -180,6 +183,7 @@ inputName address coach editable =
           , placeholder "New coach"
           , CoachesView.onTextChange address SetName
           , readonly isReadOnly
+          , id "coachName"
           ]
           [ ]
 
@@ -208,6 +212,7 @@ inputCapabilities address coach editable =
           , placeholder "Fill the capabilities of coach"
           , CoachesView.onTextChange address SetCapabilities
           , readonly isReadOnly
+          , id "capabilities"
           ]
           [ ]
 
@@ -232,13 +237,14 @@ inputDescription address coach editable =
 
   in
     textarea
-      [ class "field-light col col-12"
+      [ class "field-light col col-12 description"
       , value coach.description
       , placeholder "Fill the description of coach"
       , cols 12
       , rows 5
       , CoachesView.onTextChange address SetDescription
       , readonly isReadOnly
+      , id "description"
       ]
       [ ]
 
@@ -269,6 +275,7 @@ formSaveButton address configuration coach editable =
       [ class class'
       , onClick address action
       , disabled isDisabled
+      , id "saveCoach"
       ]
       [ i [ class "fa fa-floppy-o mr1" ] []
       , text "Save Coach"

@@ -1,19 +1,34 @@
+sudo: required
+
 language: node_js
 
 node_js:
-  - "4.2.*"
-
-cache:
-  directories:
-    - node_modules
-    - elm-stuff
-
-before_install:
-  - "npm install -g  npm@^4"
+  - "4.4.3"
 
 install:
+  - npm install elm@0.16.0 -g
+  - npm install -g http-server
+  - cd back-end
   - npm install
-  - elm-package install
+  - cd ..
+  - cd front-end
+  - npm install
+  - elm-package install -y
+  - cd ..
+  - cd e2e
+  - npm install
+  - node_modules/selenium-standalone/bin/selenium-standalone install
+  - cd ..
 
 script:
-  - npm run dev
+  - cd back-end
+  - npm run api &
+  - cd ..
+  - cd front-end
+  - IP='127.0.0.1' IP_PORT=3000 npm run build
+  - cd dist
+  - http-server -p 9999 &
+  - cd ..
+  - cd ..
+  - cd e2e
+  - WEB_SERVICE='http://127.0.0.1:9999' npm run test-ci
